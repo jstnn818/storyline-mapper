@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react'
+//import { useState, useEffect } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
 
-const logo = require("./logo.svg") as string;
+import Home from './pages/Home'
 
 function App() {
-  const [currentTime, setCurrentTime] = useState(0)
+  /*const [currentTime, setCurrentTime] = useState(0)
 
   useEffect(() => {
     const fetchCurrentTime = async () => {
@@ -15,25 +16,17 @@ function App() {
         }
     }
     fetchCurrentTime()
-  }, [])
+  }, [])*/
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <p>The current time is {currentTime}.</p>
-      </header>
+      <BrowserRouter>
+        <div className='pages'>
+          <Routes>
+            <Route path="/" element= { <Home />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
     </div>
   );
 }
