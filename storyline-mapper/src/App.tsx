@@ -1,6 +1,5 @@
 //import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import './App.css'
 
 import Home from './pages/Home'
 
@@ -19,9 +18,9 @@ function App() {
   }, [])*/
 
   return (
-    <div className="App">
+    <div>
       <BrowserRouter>
-        <div className='pages'>
+        <div>
           <Routes>
             <Route path="/" element= { <Home />} />
           </Routes>
