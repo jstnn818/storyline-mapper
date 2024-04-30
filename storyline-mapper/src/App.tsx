@@ -1,7 +1,7 @@
 //import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-import Sidebar from './components/Sidebar';
+import Navbar from './components/Navbar'
 import Home from './pages/Home'
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
   return (
     <div className="flex">
       <BrowserRouter>
-        <Sidebar />
+        <Navbar />
         <div>
           <Routes>
             <Route path="/" element= { <Home />} />
