@@ -19,7 +19,7 @@ interface UserIconProps {
 
 const Navbar = () => {
     return (
-        <div className="fixed top-0 h-16 w-screen m-0
+        <div className="fixed z-10 top-0 h-16 w-screen m-0
          bg-gray-900 text-white shadow-lg">
             <div className="flex flex-row absolute left-5 gap-5">
                 <NavbarIcon icon={IoHome} text="Home" path="/" />
