@@ -3,9 +3,12 @@ import { IoHome, IoMapSharp, IoLogInOutline } from "react-icons/io5"
 import { RxDividerVertical } from "react-icons/rx"
 import { GiCharacter } from "react-icons/gi"
 
+import { Link } from 'react-router-dom'
+
 interface NavbarIconProps {
     icon: IconType
     text: string
+    path: string
 }
 
 interface UserIconProps {
@@ -19,9 +22,9 @@ const Navbar = () => {
         <div className="fixed top-0 h-16 w-screen m-0
          bg-gray-900 text-white shadow-lg">
             <div className="flex flex-row absolute left-5 gap-5">
-                <NavbarIcon icon={IoHome} text="Home" />
-                <NavbarIcon icon={IoMapSharp} text="My Maps" />
-                <NavbarIcon icon={GiCharacter} text="My Characters" />
+                <NavbarIcon icon={IoHome} text="Home" path="/" />
+                <NavbarIcon icon={IoMapSharp} text="My Maps" path="/maps" />
+                <NavbarIcon icon={GiCharacter} text="My Characters" path="/characters" />
             </div>
             <div className="navbar-user">
                 <UserIcon icon={IoLogInOutline} divider={RxDividerVertical} username="Login" />
@@ -30,15 +33,15 @@ const Navbar = () => {
     )
 }
 
-const NavbarIcon = ({ icon, text }: NavbarIconProps) => {
+const NavbarIcon = ({ icon, text, path }: NavbarIconProps) => {
     const Icon = icon
     return (
-        <div className="navbar-icon group">
+        <Link to={path} className="navbar-icon group">
             <Icon size={28}/>
             <span className="navbar-tooltip group-hover:scale-100">
                 {text}
             </span>
-        </div>
+        </Link>
     )
 }
 

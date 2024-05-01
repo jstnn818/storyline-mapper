@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
+import MapList from './pages/MapList'
+import CharacterList from './pages/CharacterList'
 
 function App() {
   /*const [currentTime, setCurrentTime] = useState(0)
@@ -25,6 +27,8 @@ function App() {
         <div>
           <Routes>
             <Route path="/" element= { <Home />} />
+            <Route path="/maps" element= { <MapList />} />
+            <Route path="/characters" element= { <CharacterList />} />
           </Routes>
         </div>
       </BrowserRouter>
