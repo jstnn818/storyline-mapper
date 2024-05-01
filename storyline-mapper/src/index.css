@@ -14,4 +14,10 @@
         text-white bg-gray-900 text-xs font-bold transition-all duration-100
         scale-0 origin-top;
     }
+    .navbar-user {
+        @apply absolute right-10 flex items-center justify-center
+        h-12 p-5 mt-2 mb-2 mx-auto shadow-lg bg-gray-800 text-green-500 font-bold
+        hover:bg-green-600 hover:text-white rounded-3xl hover:rounded-xl
+        transition-all duration-200 ease-linear cursor-pointer;
+    }
 }

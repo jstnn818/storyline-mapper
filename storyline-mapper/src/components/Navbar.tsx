@@ -1,10 +1,17 @@
 import { IconType } from "react-icons"
-import { IoHome, IoMapSharp } from "react-icons/io5"
+import { IoHome, IoMapSharp, IoLogInOutline } from "react-icons/io5"
+import { RxDividerVertical } from "react-icons/rx"
 import { GiCharacter } from "react-icons/gi"
 
 interface NavbarIconProps {
     icon: IconType
     text: string
+}
+
+interface UserIconProps {
+    icon: IconType
+    divider: IconType
+    username: string
 }
 
 const Navbar = () => {
@@ -15,6 +22,9 @@ const Navbar = () => {
                 <NavbarIcon icon={IoHome} text="Home" />
                 <NavbarIcon icon={IoMapSharp} text="My Maps" />
                 <NavbarIcon icon={GiCharacter} text="My Characters" />
+            </div>
+            <div className="navbar-user">
+                <UserIcon icon={IoLogInOutline} divider={RxDividerVertical} username="Login" />
             </div>
         </div>
     )
@@ -31,4 +41,17 @@ const NavbarIcon = ({ icon, text }: NavbarIconProps) => {
         </div>
     )
 }
+
+const UserIcon = ({ icon, divider, username }: UserIconProps) => {
+    const Icon = icon
+    const Divider = divider
+    return (
+        <div className="flex flex-row justify-center">
+            <Icon size={28}/>
+            <Divider size={28}/>
+            <p className="mt-0.5"> {username} </p>
+        </div>
+    )
+}
+
 export default Navbar
