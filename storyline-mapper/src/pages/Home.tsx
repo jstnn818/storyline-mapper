@@ -1,12 +1,30 @@
+import { useState, useEffect } from 'react'
+
 import ExampleMap from '../images/example_map.jpg'
 import ExampleInfobox from '../images/example_infobox.png'
 
 const Home = () => {
+    const [currentTime, setCurrentTime] = useState(0)
+
+    useEffect(() => {
+        const fetchCurrentTime = async () => {
+            const response = await fetch('/time')
+            const json = await response.json()
+            if (response.ok) {
+                setCurrentTime(json.time)
+            }
+        }
+        fetchCurrentTime()
+    }, [])
+    
     return (
         <div className="flex justify-center mt-16">
             <div className="w-4/6">
                 {/* Title */}
                 <h1 className="flex justify-center font-bold text-2xl p-5 text-red-700"> Storyline Mapper </h1>
+
+                {/* Time */}
+                <p> The time is {currentTime} </p>
 
                 {/* Example Map */}
                 <div className="flex justify-center">

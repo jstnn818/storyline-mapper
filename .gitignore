@@ -4,6 +4,7 @@
 /storyline-mapper/node_modules
 /storyline-mapper/.pnp
 .pnp.js
+venv
 
 # testing
 /storyline-mapper/coverage

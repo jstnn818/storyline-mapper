@@ -1,4 +1,3 @@
-//import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import Navbar from './components/Navbar'
@@ -7,19 +6,6 @@ import MyMaps from './pages/MyMaps'
 import MyCharacters from './pages/MyCharacters'
 
 function App() {
-  /*const [currentTime, setCurrentTime] = useState(0)
-
-  useEffect(() => {
-    const fetchCurrentTime = async () => {
-        const response = await fetch('/time')
-        const json = await response.json()
-        if (response.ok) {
-            setCurrentTime(json.time)
-        }
-    }
-    fetchCurrentTime()
-  }, [])*/
-
   return (
     <div className="flex">
       <BrowserRouter>
