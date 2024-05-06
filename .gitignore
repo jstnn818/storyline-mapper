@@ -3,11 +3,14 @@
 # dependencies
 /storyline-mapper/node_modules
 /storyline-mapper/.pnp
+/storyline-mapper/api/database.db
+/storyline-mapper/api/requirements.txt
 .pnp.js
 venv
 
 # testing
 /storyline-mapper/coverage
+/storyline-mapper/api/test.py
 
 # production
 /storyline-mapper/build
