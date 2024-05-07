@@ -21,6 +21,13 @@ resource_fields = {
     'gender': fields.String,
 }
 
+class CharacterList(Resource):
+    
+    @marshal_with(resource_fields)
+    def get(self):
+        result = CharacterModel.query.all()
+        return result
+
 class Character(Resource):
     
     @marshal_with(resource_fields)
@@ -37,17 +44,19 @@ class Character(Resource):
             abort(409, message="Character ID already taken...")
             
         args = character_put_args.parse_args()
-        character = CharacterModel(id=character_id, name=args['name'], gender=args['gender'])
-        db.session.add(character)
+        object = CharacterModel(id=character_id, name=args['name'], gender=args['gender'])
+        
+        db.session.add(object)
         db.session.commit()
-        return character, 201
+        return object, 201
 
     @marshal_with(resource_fields)
     def patch(self, character_id):
-        args = character_update_args.parse_args()
         result = CharacterModel.query.filter_by(id=character_id).first()
         if not result:
             abort(404, message="Could not find character with that ID...")
+            
+        args = character_update_args.parse_args()
         if args['name']:
             result.name = args['name']
         if args['gender']:
@@ -61,8 +70,10 @@ class Character(Resource):
         result = CharacterModel.query.filter_by(id=character_id).first()
         if not result:
             abort(404, message="Could not find character with that ID...")
+            
         db.session.delete(result)
         db.session.commit()
         return '', 204
-    
+
+api.add_resource(CharacterList, "/character")
 api.add_resource(Character, "/character/<int:character_id>")
