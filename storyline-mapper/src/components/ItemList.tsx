@@ -31,7 +31,7 @@ const Item = ({ item, icon }: ItemProps) => {
     return (
         <div className="flex flex-col m-4 w-16">
             <Icon size={64} />
-            <p className="text-center">{ item.name }</p> 
+            <p className="text-center leading-5">{ item.name }</p> 
         </div>
     )
 }
