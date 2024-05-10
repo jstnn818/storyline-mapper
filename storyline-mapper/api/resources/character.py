@@ -27,6 +27,15 @@ class CharacterList(Resource):
     def get(self):
         result = CharacterModel.query.all()
         return result
+    
+    @marshal_with(resource_fields)
+    def post(self):
+        args = character_put_args.parse_args()
+        object = CharacterModel(name=args['name'], gender=args['gender'])
+        
+        db.session.add(object)
+        db.session.commit()
+        return object, 201
 
 class Character(Resource):
     
