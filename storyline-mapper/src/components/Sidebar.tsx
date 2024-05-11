@@ -29,14 +29,13 @@ const Sidebar = ({ type }: SidebarProps) => {
     const SidebarIcon = ({ icon, text }: SidebarIconProps) => {
         const Icon = icon
         return (
-            <button className="flex flex-row relative
-             bg-gray-500 p-2 border-b border-white hover:bg-gray-600"
-             onClick={toggleForm}>
+            <div className="flex flex-row relative
+             bg-gray-500 p-2 border-b border-white hover:bg-gray-600">
                 <Icon size={28} className="mx-3"/>
                 <span className="hover:text-gray">
                     {text}
                 </span>
-            </button>
+            </div>
         )
     }
 
@@ -45,7 +44,9 @@ const Sidebar = ({ type }: SidebarProps) => {
         <div>
             <div className="fixed top-16 left-0 h-screen w-64 m-0 
             flex flex-col content-start bg-gray-700 text-white">
-                <SidebarIcon icon={GoPlus} text="Create New" />
+                <button onClick={toggleForm}>
+                    <SidebarIcon icon={GoPlus} text="Create New" />
+                </button>
                 <SidebarIcon icon={TfiFiles} text={AllLabel} />
                 <SidebarIcon icon={MdFavoriteBorder} text="Favorites" />
                 <SidebarIcon icon={FaRegTrashAlt} text="Trash" />
