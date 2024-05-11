@@ -1,5 +1,6 @@
 import { IconType } from "react-icons"
 import { FaMapMarkedAlt, FaUserCircle } from "react-icons/fa"
+import { Link } from "react-router-dom"
 
 import { Character } from '../interfaces'
 
@@ -20,7 +21,9 @@ const ItemList = ({ type, list }: ItemListProps) => {
     return (
         <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-8 gap-4 m-4">
             {list && list.map(item => (
-                <Item key={item._id} item={item} icon={FileIcon}/>
+                <Link key={item.id} to={'/characters/' + item.id}>
+                    <Item item={item} icon={FileIcon}/>
+                </Link>
             ))}
         </div>
     )

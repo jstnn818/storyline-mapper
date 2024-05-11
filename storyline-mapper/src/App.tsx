@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import MyMaps from './pages/MyMaps'
 import MyCharacters from './pages/MyCharacters'
+import CharacterPage from './pages/CharacterPage'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Route path="/" element= { <Home />} />
             <Route path="/maps" element= { <MyMaps />} />
             <Route path="/characters" element= { <MyCharacters />} />
+            <Route path="/characters/:id" element= { <CharacterPage />} />
           </Routes>
         </div>
       </BrowserRouter>
