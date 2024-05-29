@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import { SlOptionsVertical } from "react-icons/sl"
 
 import ImageFiller from 'react-image-filler'
@@ -8,13 +8,11 @@ import { Character } from '../interfaces'
 
 const CharacterPage = () => {
 
+    const navigate = useNavigate()
+
     const [ character, setCharacter ] = useState<Character | null>(null)
     const { id } = useParams()
     const [ options, setOptions ] = useState(false)
-
-    const toggleOptions = () => {
-        setOptions(!options)
-    }
 
     useEffect(() => {
         const fetchCharacters = async () => {
@@ -26,6 +24,19 @@ const CharacterPage = () => {
         }
         fetchCharacters()
     }, [id])
+
+    const toggleOptions = () => {
+        setOptions(!options)
+    }
+
+    const handleDelete = async () => {
+        const response = await fetch(`/character/${id}`, {
+            method: 'DELETE',
+        })
+        if (response.ok) {
+            navigate('/characters')
+        }
+    }
 
     return (
         <div className="relative w-screen flex justify-center mt-32">
@@ -50,7 +61,7 @@ const CharacterPage = () => {
                 {options && (
                     <div className="absolute top-0 left-3 flex flex-col text-white text-center">
                         <button className="bg-gray-900 py-2 px-5 hover:bg-gray-700 w-full"> Edit </button>
-                        <button className="bg-gray-900 py-2 px-5 hover:bg-gray-700 w-full"> Delete </button>
+                        <button onClick={handleDelete} className="bg-gray-900 py-2 px-5 hover:bg-gray-700 w-full"> Delete </button>
                     </div>
                 )}
             </div>
