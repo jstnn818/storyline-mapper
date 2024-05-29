@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
+import { MdEdit, MdDelete  } from "react-icons/md"
 import { SlOptionsVertical } from "react-icons/sl"
 
 import ImageFiller from 'react-image-filler'
+import CharacterEditForm from "../forms/CharacterFormEdit"
 
 import { Character } from '../interfaces'
 
@@ -13,6 +15,7 @@ const CharacterPage = () => {
     const [ character, setCharacter ] = useState<Character | null>(null)
     const { id } = useParams()
     const [ options, setOptions ] = useState(false)
+    const [ form, setForm ] = useState(false)
 
     useEffect(() => {
         const fetchCharacters = async () => {
@@ -27,6 +30,10 @@ const CharacterPage = () => {
 
     const toggleOptions = () => {
         setOptions(!options)
+    }
+
+    const toggleForm = () => {
+        setForm(!form)
     }
 
     const handleDelete = async () => {
@@ -60,14 +67,29 @@ const CharacterPage = () => {
             <div className="relative w-0 h-0">
                 {options && (
                     <div className="absolute top-0 left-3 flex flex-col text-white text-center">
-                        <button className="bg-gray-900 py-2 px-5 hover:bg-gray-700 w-full"> Edit </button>
-                        <button onClick={handleDelete} className="bg-gray-900 py-2 px-5 hover:bg-gray-700 w-full"> Delete </button>
+                        <button onClick={toggleForm} className="flex flex-row justify-center bg-gray-900 py-2 px-5 hover:bg-gray-700 w-full border border-1 border-white">     
+                            Edit
+                            <div className="mt-1 ml-1">
+                                <MdEdit /> 
+                            </div>
+                        </button>
+                        <button onClick={handleDelete} className="flex flex-row justify-center bg-gray-900 py-2 px-5 hover:bg-gray-700 w-full border border-1 border-white"> 
+                            Delete
+                            <div className="mt-1 ml-1">
+                                <MdDelete /> 
+                            </div>
+                        </button>
                     </div>
                 )}
             </div>
 
             
-            
+            {form && id && (
+                <div className="fixed inset-0 flex items-center justify-center">
+                    <div className="bg-black bg-opacity-50 absolute inset-0" onClick={toggleForm}></div>
+                    <CharacterEditForm id={id}/>
+                </div>
+            )}    
         </div>
     )
 }

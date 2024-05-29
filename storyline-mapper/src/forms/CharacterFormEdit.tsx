@@ -1,8 +1,22 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
-const CharacterForm = () => {
+type Props = {
+    id: string
+}
+
+const CharacterEditForm = ({ id }: Props) => {
     const [ name, setName ] = useState("")
     const [ gender, setGender ] = useState("")
+
+    useEffect(() => {
+        const fetchChapter = async () => {
+            const response = await fetch('/character/' + id)
+            const json = await response.json()
+            setName(json.name)
+            setGender(json.gender)
+        }
+        fetchChapter()
+    }, [])
 
     const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -11,8 +25,8 @@ const CharacterForm = () => {
             name,
             gender,
         }
-        const response = await fetch('/character', {
-            method: 'POST',
+        const response = await fetch('/character/' + id, {
+            method: 'PATCH',
             body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json',
@@ -29,7 +43,7 @@ const CharacterForm = () => {
     return (
         <form className="submit-form" onSubmit={onSubmit}>
             <div className="text-center text-lg">
-                <h1> Create Character </h1>
+                <h1> Edit Character </h1>
             </div>
             <div>
                 <label className="label-form" htmlFor="name"> Name: </label>
@@ -56,4 +70,4 @@ const CharacterForm = () => {
         </form>
     )
 }
-export default CharacterForm
+export default CharacterEditForm
