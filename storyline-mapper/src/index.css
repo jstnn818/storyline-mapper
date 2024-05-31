@@ -2,6 +2,11 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+.leaflet-container {
+    width: 100%;
+    height: 100vh;
+}
+
 @layer components {
     .navbar-icon {
         @apply relative flex items-center justify-center 
