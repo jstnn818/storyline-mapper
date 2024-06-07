@@ -4,7 +4,12 @@ import "leaflet/dist/leaflet.css"
 
 const MapPage = () => {
 
-    const position: [number, number] = [51.505, -0.09]
+    const positions: [number, number][] = [
+        [51.505, -0.09],
+        [48.85, 2.352],
+        [46.86, 103.846],
+        [38.907, -77.036]
+    ]
 
     return (
         <div className="flex fixed w-screen mt-16">
@@ -18,7 +23,8 @@ const MapPage = () => {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 />
-                <Marker 
+                {positions && positions.map(position => (
+                    <Marker 
                     position={position} 
                     icon={new Icon({
                         iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png", 
@@ -26,10 +32,11 @@ const MapPage = () => {
                         iconAnchor: [12, 41],
                         popupAnchor: [0, -40]
                     })}>
-                    <Popup>
-                        A pretty CSS3 popup. <br /> Easily customizable.
-                    </Popup>
-                </Marker>
+                        <Popup>
+                            A pretty CSS3 popup. <br /> Easily customizable.
+                        </Popup>
+                    </Marker>
+                ))}
             </MapContainer>
             <div className="w-1/4">
                 <h1 className="flex justify-center font-bold text-2xl p-5 text-white bg-gray-700"> Map #1 </h1>
