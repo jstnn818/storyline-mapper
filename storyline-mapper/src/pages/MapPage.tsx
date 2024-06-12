@@ -1,8 +1,26 @@
+import { useState, useEffect } from "react"
+import { useParams, useNavigate } from "react-router-dom"
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import { Icon } from 'leaflet'
 import "leaflet/dist/leaflet.css"
 
+import { Map } from '../interfaces'
+
 const MapPage = () => {
+
+    const [ map, setMap ] = useState<Map | null>(null)
+    const { id } = useParams()
+
+    useEffect(() => {
+        const fetchMaps = async () => {
+            const response = await fetch(`/map/${id}`)
+            const json = await response.json()
+            if (response.ok) {
+                setMap(json)
+            }
+        }
+        fetchMaps()
+    }, [id])
 
     const positions: [number, number][] = [
         [51.505, -0.09],
@@ -39,8 +57,9 @@ const MapPage = () => {
                 ))}
             </MapContainer>
             <div className="w-1/4">
-                <h1 className="flex justify-center font-bold text-2xl p-5 text-white bg-gray-700"> Map #1 </h1>
+                <h1 className="flex justify-center font-bold text-2xl p-5 text-white bg-gray-700"> {map?.name} </h1>
                 <p className="p-5"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+                {map?.filepath && <img src={`/static/${map.filepath}`} alt="Uploaded" />}
             </div>
         </div>
     )

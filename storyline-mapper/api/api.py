@@ -1,23 +1,28 @@
 import time
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask_restful import Api
-from resources.character import character
 
+from config import Config
+from resources.blueprints import create_blueprints
 from db import db
 
 app = Flask(__name__)
 api = Api(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+app.config.from_object(Config)
 db.init_app(app)
+create_blueprints(app)
 
-app.register_blueprint(character)
+with app.app_context():
+    db.create_all()
 
 @app.route('/time')
 def get_current_time():
     return {'time': time.time()}
+
+@app.route('/static/<path:filename>')
+def serve_static(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 if __name__ == "__main__":
     app.run(debug=True)

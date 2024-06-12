@@ -5,6 +5,7 @@
 /storyline-mapper/.pnp
 /storyline-mapper/api/database.db
 /storyline-mapper/api/requirements.txt
+/storyline-mapper/api/static/*
 .pnp.js
 venv
 

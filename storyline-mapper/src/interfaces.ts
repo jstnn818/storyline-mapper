@@ -3,3 +3,9 @@ export interface Character {
     name: string
     gender: string
 }
+
+export interface Map {
+    id: string
+    name: string
+    filepath: string
+}
