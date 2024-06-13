@@ -16,12 +16,10 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 map_put_args = reqparse.RequestParser()
 map_put_args.add_argument("name", required=True, type=str, help="Name of map")
 map_put_args.add_argument('file', required=True, type=werkzeug.datastructures.FileStorage, location='files')
-map_put_args.add_argument("filename", required=True, type=str, location="form")
 
 map_update_args = reqparse.RequestParser()
 map_update_args.add_argument("name", type=str, help="Name of map")
 map_update_args.add_argument('file', type=werkzeug.datastructures.FileStorage, location='files')
-map_update_args.add_argument("filename", type=str, location="form")
 
 
 resource_fields = {

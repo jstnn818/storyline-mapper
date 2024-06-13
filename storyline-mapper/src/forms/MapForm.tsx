@@ -3,7 +3,6 @@ import { useState } from "react"
 const MapForm = () => {
     const [ name, setName ] = useState("")
     const [ file, setFile ] = useState<File | null>(null)
-    const [ filename, setFileName ] = useState("")
 
     const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -14,7 +13,6 @@ const MapForm = () => {
         const data = new FormData()
         data.append('name', name)
         data.append('file', file)
-        data.append('filename', filename)
 
         const response = await fetch('/map', {
             method: 'POST',
@@ -46,15 +44,6 @@ const MapForm = () => {
                 <input className="input-form"
                     type="file"
                     onChange={(e) => setFile(e.target.files?.[0] || null)}
-                />
-            </div>
-            <div>
-                <label className="label-form" htmlFor="filename"> File Name: </label>
-                <input className="input-form"
-                    type="text" 
-                    id="filename" 
-                    value={filename} 
-                    onChange={(e) => setFileName(e.target.value)}
                 />
             </div>
             <div className="text-center">
