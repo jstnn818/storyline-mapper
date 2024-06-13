@@ -6,6 +6,7 @@ import { GoPlus } from "react-icons/go"
 import { useState } from "react"
 
 import CharacterForm from "../forms/CharacterForm"
+import MapForm from "../forms/MapForm"
 
 interface SidebarProps {
     type: string
@@ -15,8 +16,6 @@ interface SidebarIconProps {
     icon: IconType
     text: string
 }
-
-
 
 const Sidebar = ({ type }: SidebarProps) => {
 
@@ -54,7 +53,7 @@ const Sidebar = ({ type }: SidebarProps) => {
             {form && (
                 <div className="fixed inset-0 flex items-center justify-center">
                     <div className="bg-black bg-opacity-50 absolute inset-0" onClick={toggleForm}></div>
-                    <CharacterForm />
+                    {type == "map" ? <MapForm /> : <CharacterForm />}
                 </div>
             )}
         </div>

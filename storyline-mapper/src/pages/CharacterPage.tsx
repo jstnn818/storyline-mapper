@@ -18,14 +18,14 @@ const CharacterPage = () => {
     const [ form, setForm ] = useState(false)
 
     useEffect(() => {
-        const fetchCharacters = async () => {
+        const fetchCharacter = async () => {
             const response = await fetch(`/character/${id}`)
             const json = await response.json()
             if (response.ok) {
                 setCharacter(json)
             }
         }
-        fetchCharacters()
+        fetchCharacter()
     }, [id])
 
     const toggleOptions = () => {

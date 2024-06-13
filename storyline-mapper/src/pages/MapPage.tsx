@@ -12,14 +12,14 @@ const MapPage = () => {
     const { id } = useParams()
 
     useEffect(() => {
-        const fetchMaps = async () => {
+        const fetchMap = async () => {
             const response = await fetch(`/map/${id}`)
             const json = await response.json()
             if (response.ok) {
                 setMap(json)
             }
         }
-        fetchMaps()
+        fetchMap()
     }, [id])
 
     const positions: [number, number][] = [
