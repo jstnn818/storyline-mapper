@@ -4,7 +4,7 @@ import { MdEdit, MdDelete  } from "react-icons/md"
 import { SlOptionsVertical } from "react-icons/sl"
 
 import ImageFiller from 'react-image-filler'
-import CharacterEditForm from "../forms/CharacterFormEdit"
+import CharacterFormEdit from "../forms/CharacterFormEdit"
 
 import { Character } from '../interfaces'
 
@@ -87,7 +87,7 @@ const CharacterPage = () => {
             {form && id && (
                 <div className="fixed inset-0 flex items-center justify-center">
                     <div className="bg-black bg-opacity-50 absolute inset-0" onClick={toggleForm}></div>
-                    <CharacterEditForm id={id}/>
+                    <CharacterFormEdit id={id}/>
                 </div>
             )}    
         </div>
