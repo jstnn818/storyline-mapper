@@ -8,8 +8,8 @@ character = Blueprint('character', __name__)
 api = Api(character)
 
 character_put_args = reqparse.RequestParser()
-character_put_args.add_argument("name", type=str, help="Name of character", required=True)
-character_put_args.add_argument("gender", type=str, help="Gender of character", required=True)
+character_put_args.add_argument("name", required=True, type=str, help="Name of character")
+character_put_args.add_argument("gender", required=True, type=str, help="Gender of character")
 
 character_update_args = reqparse.RequestParser()
 character_update_args.add_argument("name", type=str, help="Name of character")

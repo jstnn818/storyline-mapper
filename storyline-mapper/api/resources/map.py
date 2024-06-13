@@ -14,9 +14,15 @@ api = Api(map)
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 map_put_args = reqparse.RequestParser()
-map_put_args.add_argument("name", type=str, help="Name of map")
+map_put_args.add_argument("name", required=True, type=str, help="Name of map")
 map_put_args.add_argument('file', required=True, type=werkzeug.datastructures.FileStorage, location='files')
 map_put_args.add_argument("filename", required=True, type=str, location="form")
+
+map_update_args = reqparse.RequestParser()
+map_update_args.add_argument("name", type=str, help="Name of map")
+map_update_args.add_argument('file', type=werkzeug.datastructures.FileStorage, location='files')
+map_update_args.add_argument("filename", type=str, location="form")
+
 
 resource_fields = {
     'id': fields.Integer,
@@ -57,6 +63,37 @@ class Map(Resource):
         if not result:
             abort(404, message="Could not find map with that ID...")
         return result
+    
+    @marshal_with(resource_fields)
+    def patch(self, map_id):
+        result = MapModel.query.filter_by(id=map_id).first()
+        if not result:
+            abort(404, message="Could not find map with that ID...")
+            
+        args = map_update_args.parse_args()
+        image = args['file']
+        if args['name']:
+            result.name = args['name']
+        if image:
+            filename = secure_filename(image.filename)
+            image.save(os.path.join(Config.UPLOAD_FOLDER, filename))
+            result.filepath = filename
+
+        db.session.commit()
+        return result, 201
+    
+    @marshal_with(resource_fields)
+    def delete(self, map_id):
+        result = MapModel.query.filter_by(id=map_id).first()
+        if not result:
+            abort(404, message="Could not find map with that ID...")
+        try:
+            os.remove(os.path.join(Config.UPLOAD_FOLDER, result.filepath))
+        except:
+            abort(404, message="Could not find image at that filepath...")
+        db.session.delete(result)
+        db.session.commit()
+        return '', 204
 
 api.add_resource(MapList, "/map")
 api.add_resource(Map, "/map/<int:map_id>")
