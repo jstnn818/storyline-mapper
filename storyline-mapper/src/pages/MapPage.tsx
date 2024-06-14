@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+
 import { MdEdit, MdDelete  } from "react-icons/md"
 import { SlOptionsVertical } from "react-icons/sl"
-import { Icon } from 'leaflet'
+
+import { MapContainer, ImageOverlay, TileLayer, Marker, Popup } from 'react-leaflet'
+import { Icon, CRS, LatLngBounds } from 'leaflet'
 import "leaflet/dist/leaflet.css"
 
 import MapFormEdit from "../forms/MapFormEdit"
@@ -47,6 +49,8 @@ const MapPage = () => {
         }
     }
 
+    const bounds = new LatLngBounds([0, 0], [1731, 728])
+
     const positions: [number, number][] = [
         [51.505, -0.09],
         [48.85, 2.352],
@@ -58,6 +62,19 @@ const MapPage = () => {
         <div className="flex fixed w-screen mt-16">
             <div className="w-3/4 z-10">
                 <MapContainer
+                    crs={CRS.Simple}
+                    className="markercluster-map"
+                    center={[865, 364]}
+                    zoom={1}
+                    maxZoom={4}
+                    minZoom={-2}
+                >
+                    <ImageOverlay
+                        url={`/static/${map?.filepath}`}
+                        bounds={bounds}
+                    />
+                </MapContainer>
+                {/*<MapContainer
                     className="markercluster-map"
                     center={[51.0, 19.0]}
                     zoom={4}
@@ -81,7 +98,7 @@ const MapPage = () => {
                             </Popup>
                         </Marker>
                     ))}
-                </MapContainer>
+                </MapContainer>*/}
             </div>
             <div className="w-1/4">
                 <h1 className="flex justify-center font-bold text-2xl p-5 text-white bg-gray-700"> {map?.name} </h1>
@@ -108,7 +125,6 @@ const MapPage = () => {
                     )}
                 </div>
                 <p className="p-5"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
-                {map?.filepath && <img src={`/static/${map.filepath}`} alt="Uploaded" />}
             </div>
             
             
