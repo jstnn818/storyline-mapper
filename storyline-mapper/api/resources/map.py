@@ -1,4 +1,4 @@
-import werkzeug, os, sys
+import werkzeug, os
 
 from flask import Blueprint
 from flask_restful import Api, Resource, reqparse, fields, marshal_with, abort
@@ -64,7 +64,6 @@ class Map(Resource):
         result = MapModel.query.filter_by(id=map_id).first()
         if not result:
             abort(404, message="Could not find map with that ID...")
-        print(f"Width: {result.width}, Height: {result.height}", file=sys.stderr)
         return result
     
     @marshal_with(resource_fields)

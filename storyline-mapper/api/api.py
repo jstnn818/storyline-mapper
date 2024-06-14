@@ -4,13 +4,14 @@ from flask_restful import Api
 
 from config import Config
 from resources.blueprints import create_blueprints
-from db import db
+from db import db, migrate
 
 app = Flask(__name__)
 api = Api(app)
 
 app.config.from_object(Config)
 db.init_app(app)
+migrate.init_app(app, db)
 create_blueprints(app)
 
 with app.app_context():
