@@ -1,8 +1,9 @@
-import werkzeug, os
+import werkzeug, os, sys
 
 from flask import Blueprint
 from flask_restful import Api, Resource, reqparse, fields, marshal_with, abort
 from werkzeug.utils import secure_filename
+from PIL import Image
 
 from models import MapModel
 from config import Config
@@ -26,6 +27,8 @@ resource_fields = {
     'id': fields.Integer,
     'name': fields.String,
     'filepath': fields.String,
+    'width': fields.Integer,
+    'height': fields.Integer
 }
 
 class MapList(Resource):
@@ -45,9 +48,10 @@ class MapList(Resource):
 
         if image and self.allowed_files(image.filename):
             filename = secure_filename(image.filename)
-            image.save(os.path.join(Config.UPLOAD_FOLDER, filename))
-
-            new_map = MapModel(name=args['name'], filepath=filename)
+            filepath = os.path.join(Config.UPLOAD_FOLDER, filename)
+            image.save(filepath)
+            img = Image.open(filepath)
+            new_map = MapModel(name=args['name'], filepath=filename, width=img.width, height=img.height)
             db.session.add(new_map)
             db.session.commit()
             return new_map, 201
@@ -60,6 +64,7 @@ class Map(Resource):
         result = MapModel.query.filter_by(id=map_id).first()
         if not result:
             abort(404, message="Could not find map with that ID...")
+        print(f"Width: {result.width}, Height: {result.height}", file=sys.stderr)
         return result
     
     @marshal_with(resource_fields)
@@ -74,8 +79,13 @@ class Map(Resource):
             result.name = args['name']
         if image:
             filename = secure_filename(image.filename)
-            image.save(os.path.join(Config.UPLOAD_FOLDER, filename))
+            filepath = os.path.join(Config.UPLOAD_FOLDER, filename)
+            image.save(filepath)
+            img = Image.open(filepath)
+
             result.filepath = filename
+            result.width = img.width
+            result.height = img.height
 
         db.session.commit()
         return result, 201

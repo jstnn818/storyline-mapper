@@ -8,4 +8,6 @@ export interface Map {
     id: string
     name: string
     filepath: string
+    width: number
+    height: number
 }

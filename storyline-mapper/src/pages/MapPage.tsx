@@ -4,8 +4,8 @@ import { useParams, useNavigate } from "react-router-dom"
 import { MdEdit, MdDelete  } from "react-icons/md"
 import { SlOptionsVertical } from "react-icons/sl"
 
-import { MapContainer, ImageOverlay, TileLayer, Marker, Popup } from 'react-leaflet'
-import { Icon, CRS, LatLngBounds } from 'leaflet'
+import { MapContainer, ImageOverlay } from 'react-leaflet' //, TileLayer, Marker, Popup
+import { CRS, LatLngBounds } from 'leaflet' //Icon,
 import "leaflet/dist/leaflet.css"
 
 import MapFormEdit from "../forms/MapFormEdit"
@@ -20,6 +20,7 @@ const MapPage = () => {
     const { id } = useParams()
     const [ options, setOptions ] = useState(false)
     const [ form, setForm ] = useState(false)
+    const [ bounds, setBounds ] = useState<LatLngBounds>(new LatLngBounds([0, 0], [0, 0]))
 
     useEffect(() => {
         const fetchMap = async () => {
@@ -28,9 +29,12 @@ const MapPage = () => {
             if (response.ok) {
                 setMap(json)
             }
+            setBounds(new LatLngBounds([0, 0], [json.height, json.width]))
         }
         fetchMap()
     }, [id])
+
+    //const bounds = new LatLngBounds()
 
     const toggleOptions = () => {
         setOptions(!options)
@@ -49,23 +53,23 @@ const MapPage = () => {
         }
     }
 
-    const bounds = new LatLngBounds([0, 0], [1731, 728])
+    
 
-    const positions: [number, number][] = [
+    /*const positions: [number, number][] = [
         [51.505, -0.09],
         [48.85, 2.352],
         [46.86, 103.846],
         [38.907, -77.036]
-    ]
+    ]*/
 
     return (
         <div className="flex fixed w-screen mt-16">
             <div className="w-3/4 z-10">
-                <MapContainer
+                {map && (<MapContainer
                     crs={CRS.Simple}
                     className="markercluster-map"
-                    center={[865, 364]}
-                    zoom={1}
+                    center={[map.height / 2, map.width / 2]}
+                    zoom={-2}
                     maxZoom={4}
                     minZoom={-2}
                 >
@@ -73,7 +77,7 @@ const MapPage = () => {
                         url={`/static/${map?.filepath}`}
                         bounds={bounds}
                     />
-                </MapContainer>
+                </MapContainer>)}
                 {/*<MapContainer
                     className="markercluster-map"
                     center={[51.0, 19.0]}
